@@ -1,6 +1,7 @@
 version: '3'
 services:
   mysqldb:
+    container_name: db
     image: mysql:latest
     ports:
       - '3306:3306'
@@ -9,11 +10,6 @@ services:
       - MYSQL_DATABASE=app
       - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
-#  postgresdb:
-#    image: postgres:latest
-#    ports:
-#      - '5432:5432'
-#    environment:
-#      - POSTGRES_DB=app
-#      - POSTGRES_USER=app
-#      - POSTGRES_PASSWORD=pass
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./schema:/docker-entrypoint-initdb.d/:ro
