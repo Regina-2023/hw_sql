@@ -1,6 +1,7 @@
 package ru.netology;
 
 import com.codeborne.selenide.WebDriverRunner;
+import data.DataHelper;
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,22 +29,19 @@ public class TripleIncorrectAuth {
 
     @Test
     @SneakyThrows
-    @DisplayName("Check triple incorrect auth")
-    void shouldSuccessfulLoginIfRegisteredActiveUser() {
-        open("http://localhost:9999");
-        var loginPage = new LoginPage();
-        var codePage = loginPage.login("vasya", "qwerty123");
-        codePage.sendCode("123");
-        open("http://localhost:9999");
-        loginPage.login("vasya", "qwerty123");
-        codePage.sendCode("123");
-        open("http://localhost:9999");
-        loginPage.login("vasya", "qwerty123");
-        codePage.sendCode("123");
-        open("http://localhost:9999");
-        loginPage.login("vasya", "qwerty123");
-        codePage.sendCode("123");
-        Thread.sleep(2000);
+    @DisplayName("Check four incorrect auth")
+    void fourErrorInputCode() {
+        var user = DataHelper.getAuthInfo();
+
+        for (int i = 1; i < 5; i++) {
+            open("http://localhost:9999");
+            var loginPage = new LoginPage();
+            var codePage = loginPage.login(user.getLogin(), user.getPassword());
+            codePage.sendCode("123");
+            if (i == 4) {
+                Thread.sleep(2000);
+            }
+        }
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
         assertEquals("http://localhost:9999/", currentUrl);
     }
