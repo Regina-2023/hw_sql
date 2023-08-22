@@ -6,9 +6,9 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$;
 
 public class BalancePage {
-    private SelenideElement tagH2 = $("h2");
+    private SelenideElement heading = $("h2[data-test-id='dashboard']");
 
     public BalancePage() {
-        tagH2.shouldBe(Condition.visible);
+        heading.shouldBe(Condition.visible);
     }
 }

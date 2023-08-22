@@ -11,5 +11,4 @@ services:
       - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
     volumes:
-      - ./mysql/data:/var/lib/mysql
       - ./schema:/docker-entrypoint-initdb.d/:ro
